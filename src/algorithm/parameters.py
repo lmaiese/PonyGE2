@@ -8,14 +8,14 @@ machine_name = "MY_PC"
 """Algorithm parameters"""
 params = {
 # Set optional experiment name
-    'EXPERIMENT_NAME': "1-06/EXP1",
+    'EXPERIMENT_NAME': "1-06/EXP2",
     # Set default step and search loop functions
     'SEARCH_LOOP': 'search_loop',
     'STEP': 'step',
 
     # Evolutionary Parameters
-    'POPULATION_SIZE': 10,
-    'GENERATIONS': 5,
+    'POPULATION_SIZE': 500,
+    'GENERATIONS': 25,
     'HILL_CLIMBING_HISTORY': 1000,
     'SCHC_COUNT_METHOD': "count_all",
 
@@ -71,7 +71,7 @@ params = {
     # Set selection operator.
     'SELECTION': "operators.selection.tournament",
     # For tournament selection
-    'TOURNAMENT_SIZE': 5,
+    'TOURNAMENT_SIZE': 10,
     # For truncation selection
     'SELECTION_PROPORTION': 0.5,
     # Allow for selection of invalid individuals during selection process.
@@ -178,7 +178,7 @@ params = {
 
     # MULTI-AGENT Parameters
     # True or False for multi-agent
-    'MULTIAGENT': True,
+    'MULTIAGENT': False,
     # Agent Size. Number of agents having their own copy of genetic material
     'AGENT_SIZE': 100,
     # Interaction Probability: how frequently the agents can interaction with

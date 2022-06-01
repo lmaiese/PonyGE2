@@ -15,10 +15,14 @@ from stats.stats import get_stats
 from algorithm.parameters import params, set_params
 import sys
 
+def test_function():
+    pass
 
 def mane():
     """ Run program """
     set_params(sys.argv[1:])  # exclude the ponyge.py arg itself
+
+    print(params['POPULATION_SIZE'], params['GENERATIONS'])
 
     # Run evolution
     individuals = params['SEARCH_LOOP']()
@@ -27,6 +31,8 @@ def mane():
     get_stats(individuals, end=True)
 
     print(individuals.__class__)
+
+    print(individuals)
 
 
 if __name__ == "__main__":

@@ -55,13 +55,13 @@ class my_ff(base_ff):
                 ground_truth.append(tuple[54])
                 times.append(t1 - t0)
                 if x % 10000 == 0 and x != 0:
-                    print("Sample {} - Iteration {}: Ok".format(self.sample, x))
+                    print("\nSample {} - Iteration {}: Ok".format(self.sample, x))
             except:
                 self.exceptions_count += 1
-                print("Exception n° {}".format(self.exceptions_count))
+                print("\nException n° {}".format(self.exceptions_count))
                 return self.default_fitness
         function_fitness = mean_squared_error(ground_truth, guesses, squared=False)
-        return 1 / function_fitness
+        return function_fitness
 
 
 def open_train_file(directory, extension):
