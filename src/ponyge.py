@@ -26,6 +26,8 @@ def mane():
     # Print final review
     get_stats(individuals, end=True)
 
+    print(individuals.__class__)
+
 
 if __name__ == "__main__":
     mane()

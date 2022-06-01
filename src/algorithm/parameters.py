@@ -7,6 +7,8 @@ machine_name = "MY_PC"
 
 """Algorithm parameters"""
 params = {
+# Set optional experiment name
+    'EXPERIMENT_NAME': "1-06/EXP1",
     # Set default step and search loop functions
     'SEARCH_LOOP': 'search_loop',
     'STEP': 'step',
@@ -17,8 +19,7 @@ params = {
     'HILL_CLIMBING_HISTORY': 1000,
     'SCHC_COUNT_METHOD': "count_all",
 
-    # Set optional experiment name
-    'EXPERIMENT_NAME': "EXP1/1-05",
+
     # Set default number of runs to be done.
     # ONLY USED WITH EXPERIMENT MANAGER.
     'RUNS': 1,
@@ -32,7 +33,7 @@ params = {
     'DATASET_DELIMITER': None,
 
     # Set grammar file
-    'GRAMMAR_FILE': "my_grammar2.bnf",
+    'GRAMMAR_FILE': "my_grammar2.pybnf",
 
     # Set the number of depths permutations are calculated for
     # (starting from the minimum path of the grammar).

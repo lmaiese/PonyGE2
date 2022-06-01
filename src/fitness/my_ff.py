@@ -36,7 +36,7 @@ class my_ff(base_ff):
 
     def evaluate(self, ind, **kwargs):
         p = ind.phenotype
-        #print("\n" + p)
+        # print("\n" + p)
         fitness = 0
         file = pd.read_csv(train_absolute, skiprows=1, header=None)
         ground_truth = []
@@ -50,13 +50,14 @@ class my_ff(base_ff):
                 guesses.append(eval(function))
                 t1 = time.time()
                 ground_truth.append(tuple[54])
-                times.append(t1-t0)
-                print("Iteration {}: Ok".format(x))
+                times.append(t1 - t0)
+                if x % 10000 == 0:
+                    print("Iteration {}: Ok".format(x))
             except:
                 print("EXCEPTION")
                 return self.default_fitness
         function_fitness = mean_squared_error(ground_truth, guesses, squared=False)
-        return function_fitness
+        return 1 / function_fitness
 
 
 def open_train_file(directory, extension):
@@ -144,4 +145,3 @@ if __name__ == '__main__':
 
     x = eval("(10 + 32 - 36) + 94*math.pow(10, -1) -89*math.pow(10, -4)")
     print(x)
-
