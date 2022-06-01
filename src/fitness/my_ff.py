@@ -33,9 +33,12 @@ class my_ff(base_ff):
     def __init__(self):
         # Initialise base fitness function class.
         super().__init__()
+        self.sample = 0
+        self.exceptions_count = 0
 
     def evaluate(self, ind, **kwargs):
         p = ind.phenotype
+        self.sample += + 1
         # print("\n" + p)
         fitness = 0
         file = pd.read_csv(train_absolute, skiprows=1, header=None)
@@ -51,10 +54,11 @@ class my_ff(base_ff):
                 t1 = time.time()
                 ground_truth.append(tuple[54])
                 times.append(t1 - t0)
-                if x % 10000 == 0:
-                    print("Iteration {}: Ok".format(x))
+                if x % 10000 == 0 and x != 0:
+                    print("Sample {} - Iteration {}: Ok".format(self.sample, x))
             except:
-                print("EXCEPTION")
+                self.exceptions_count += 1
+                print("Exception n° {}".format(self.exceptions_count))
                 return self.default_fitness
         function_fitness = mean_squared_error(ground_truth, guesses, squared=False)
         return 1 / function_fitness
