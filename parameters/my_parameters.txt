@@ -2,8 +2,8 @@ CACHE:                  True
 CODON_SIZE:             100000
 CROSSOVER:              variable_twopoint
 CROSSOVER_PROBABILITY:  0.75
-DATASET_TRAIN:          Glucos/540/540-ws-training.csv
-DATASET_TEST:           Glucos/540/540-ws-testing.csv
+DATASET_TRAIN:          Glucose/540/540-ws-training.csv
+DATASET_TEST:           Glucose/540/540-ws-testing.csv
 DEBUG:                  True
 ERROR_METRIC:           rmse
 GENERATIONS:            50

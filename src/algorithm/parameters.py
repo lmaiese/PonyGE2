@@ -3,7 +3,7 @@ from os import path
 from socket import gethostname
 
 hostname = gethostname().split('.')
-machine_name = hostname[0]
+machine_name = "MY_PC"
 
 """Algorithm parameters"""
 params = {
@@ -12,27 +12,27 @@ params = {
     'STEP': 'step',
 
     # Evolutionary Parameters
-    'POPULATION_SIZE': 500,
+    'POPULATION_SIZE': 50,
     'GENERATIONS': 50,
     'HILL_CLIMBING_HISTORY': 1000,
     'SCHC_COUNT_METHOD': "count_all",
 
     # Set optional experiment name
-    'EXPERIMENT_NAME': None,
+    'EXPERIMENT_NAME': "EXP1/1-05",
     # Set default number of runs to be done.
     # ONLY USED WITH EXPERIMENT MANAGER.
     'RUNS': 1,
 
     # Class of problem
-    'FITNESS_FUNCTION': "supervised_learning.regression",
+    'FITNESS_FUNCTION': "my_ff",
 
     # Select problem dataset
-    'DATASET_TRAIN': "Vladislavleva4/Train.txt",
-    'DATASET_TEST': None,
+    'DATASET_TRAIN': "Glucose/540/540-ws-training.csv",
+    'DATASET_TEST': "Glucose/540/540-ws-testing.csv",
     'DATASET_DELIMITER': None,
 
     # Set grammar file
-    'GRAMMAR_FILE': "supervised_learning/Vladislavleva4.bnf",
+    'GRAMMAR_FILE': "my_grammar2.bnf",
 
     # Set the number of depths permutations are calculated for
     # (starting from the minimum path of the grammar).
@@ -40,7 +40,7 @@ params = {
     'PERMUTATION_RAMPS': 5,
 
     # Select error metric
-    'ERROR_METRIC': None,
+    'ERROR_METRIC': "rmse",
 
     # Optimise constants in the supervised_learning fitness function.
     'OPTIMIZE_CONSTANTS': False,
@@ -58,7 +58,7 @@ params = {
 
     # INITIALISATION
     # Set initialisation operator.
-    'INITIALISATION': "operators.initialisation.PI_grow",
+    'INITIALISATION': "rvd",
     # Set the maximum genome length for initialisation.
     'INIT_GENOME_LENGTH': 200,
     # Set the maximum tree depth for initialisation.
@@ -70,7 +70,7 @@ params = {
     # Set selection operator.
     'SELECTION': "operators.selection.tournament",
     # For tournament selection
-    'TOURNAMENT_SIZE': 2,
+    'TOURNAMENT_SIZE': 5,
     # For truncation selection
     'SELECTION_PROPORTION': 0.5,
     # Allow for selection of invalid individuals during selection process.
@@ -83,7 +83,7 @@ params = {
 
     # CROSSOVER
     # Set crossover operator.
-    'CROSSOVER': "operators.crossover.variable_onepoint",
+    'CROSSOVER': "operators.crossover.variable_twopoint",
     # Set crossover probability.
     'CROSSOVER_PROBABILITY': 0.75,
     # Prevents crossover from generating invalids.
@@ -91,7 +91,7 @@ params = {
 
     # MUTATION
     # Set mutation operator.
-    'MUTATION': "operators.mutation.int_flip_per_codon",
+    'MUTATION': "operators.mutation.subtree",
     # Set mutation probability (None defaults to 1 over the length of
     # the genome for each codon)
     'MUTATION_PROBABILITY': None,
@@ -135,10 +135,10 @@ params = {
     # STATE SAVING/LOADING
     # Save the state of the evolutionary run every generation. You can
     # specify how often you want to save the state with SAVE_STATE_STEP.
-    'SAVE_STATE': False,
+    'SAVE_STATE': True,
     # Specify how often the state of the current evolutionary run is
     # saved (i.e. every n-th generation). Requires int value.
-    'SAVE_STATE_STEP': 1,
+    'SAVE_STATE_STEP': 10,
     # Load an evolutionary run from a saved state. You must specify the
     # full file path to the desired state file. Note that state files have
     # no file type.
@@ -163,7 +163,7 @@ params = {
     # string of each phenotype in a big list of all phenotypes. Saves all
     # fitness information on each individual. Gives you an idea of how much
     # repetition is in standard GE/GP.
-    'CACHE': False,
+    'CACHE': True,
     # Uses the cache to look up the fitness of duplicate individuals. CACHE
     # must be set to True if you want to use this.
     'LOOKUP_FITNESS': False,
@@ -173,16 +173,16 @@ params = {
     # Removes duplicate individuals from the population by replacing them
     # with mutated versions of the original individual. Hopefully this will
     # encourage diversity in the population.
-    'MUTATE_DUPLICATES': False,
+    'MUTATE_DUPLICATES': True,
 
     # MULTI-AGENT Parameters
     # True or False for multi-agent
-    'MULTIAGENT': False,
+    'MULTIAGENT': True,
     # Agent Size. Number of agents having their own copy of genetic material
     'AGENT_SIZE': 100,
     # Interaction Probability: how frequently the agents can interaction with
     # each other
-    'INTERACTION_PROBABILITY': 0.5,
+    'INTERACTION_PROBABILITY': 0.7,
 
     # OTHER
     # Set machine name (useful for doing multiple runs)
