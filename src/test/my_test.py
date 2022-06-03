@@ -7,7 +7,7 @@ result_file1 = "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\1-06\\EXP
                "LAPTOP-QPRKET60_22_6_1_175902_248840_21316_248840\\best.txt"
 
 result_file2 = "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\3-06\\EXP1\\" \
-               "LAPTOP-QPRKET60_22_6_3_173553_773404_38744_773404\\6.txt"
+               "LAPTOP-QPRKET60_22_6_3_173553_773404_38744_773404\\29.txt"
 
 test_file = "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\datasets\\Glucose\\540\\540-ws-testing.csv"
 terminator = "Phenotype:" + "\n"
@@ -66,4 +66,5 @@ def test_function(test, result):
 
 if __name__ == '__main__':
     ge, be, ne, guesses, desired = test_function(test_file, result_file2)
-    clarke_error_grid(desired, guesses, "")
+    filename = result_file2.split("\\")[-1]
+    clarke_error_grid(desired, guesses, filename)

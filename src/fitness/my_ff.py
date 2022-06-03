@@ -80,7 +80,7 @@ class my_ff(base_ff):
             except:
                 self.exceptions_count_ind += 1
                 print("\nError with the individuals n° {}".format(self.exceptions_count_ind))
-                print(p.ind)
+                print(p)
                 return self.default_fitness
         try:
             function_fitness = mean_squared_error(ground_truth, guesses, squared=False)
