@@ -8,14 +8,14 @@ machine_name = "MY_PC"
 """Algorithm parameters"""
 params = {
 # Set optional experiment name
-    'EXPERIMENT_NAME': "1-06/EXP2",
+    'EXPERIMENT_NAME': "3-06/EXP1",
     # Set default step and search loop functions
     'SEARCH_LOOP': 'search_loop',
     'STEP': 'step',
 
     # Evolutionary Parameters
-    'POPULATION_SIZE': 500,
-    'GENERATIONS': 25,
+    'POPULATION_SIZE': 200,
+    'GENERATIONS': 250,
     'HILL_CLIMBING_HISTORY': 1000,
     'SCHC_COUNT_METHOD': "count_all",
 
@@ -53,7 +53,7 @@ params = {
     'MAX_TREE_DEPTH': 90,  # SET TO 90 DUE TO PYTHON EVAL() STACK LIMIT.
     # INCREASE AT YOUR OWN RISK.
     'MAX_TREE_NODES': None,
-    'CODON_SIZE': 100000,
+    'CODON_SIZE': 300,
     'MAX_GENOME_LENGTH': None,
     'MAX_WRAPS': 0,
 
@@ -71,7 +71,7 @@ params = {
     # Set selection operator.
     'SELECTION': "operators.selection.tournament",
     # For tournament selection
-    'TOURNAMENT_SIZE': 10,
+    'TOURNAMENT_SIZE': 25,
     # For truncation selection
     'SELECTION_PROPORTION': 0.5,
     # Allow for selection of invalid individuals during selection process.
@@ -115,14 +115,14 @@ params = {
     # PRINTING
     # Use this to print out basic statistics for each generation to the
     # command line.
-    'VERBOSE': False,
+    'VERBOSE': True,
     # Use this to prevent anything being printed to the command line.
     'SILENT': False,
 
     # SAVING
     # Save the phenotype of the best individual from each generation. Can
     # generate a lot of files. DEBUG must be False.
-    'SAVE_ALL': False,
+    'SAVE_ALL': True,
     # Save a plot of the evolution of the best fitness result for each
     # generation.
     'SAVE_PLOTS': True,

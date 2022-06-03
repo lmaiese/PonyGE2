@@ -15,14 +15,16 @@ from stats.stats import get_stats
 from algorithm.parameters import params, set_params
 import sys
 
+
 def test_function():
     pass
+
 
 def mane():
     """ Run program """
     set_params(sys.argv[1:])  # exclude the ponyge.py arg itself
 
-    print(params['POPULATION_SIZE'], params['GENERATIONS'])
+    print(params['POPULATION_SIZE'], params['GENERATIONS'], params['TOURNAMENT_SIZE'])
 
     # Run evolution
     individuals = params['SEARCH_LOOP']()

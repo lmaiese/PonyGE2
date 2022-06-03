@@ -1,6 +1,6 @@
 <func> ::= <expr>
 
-<expr> ::= (<gl> + <ch> - <ins>) + <cte> -<cte>
+<expr> ::= (<gl> + <ch> - <ins>) + <cte> - <cte>
 
 <gl> ::= <preop> (<gl>) |
          <vargl> |

@@ -9,6 +9,8 @@ import math
 from sklearn.metrics import mean_squared_error
 
 generation_range = 9
+individuals_number = 0
+graphFit = []
 data_dir = "datasets/Glucose"
 training_ext = "ws-training"
 testing_ext = "ws-testing"
@@ -29,12 +31,30 @@ def variables_substitution(p, tuple):
     return p
 
 
+def addFitness(fitness, i):
+    # graphFit.append(fitness)
+    textfile = open("a_file.txt", "a")
+    textfile.write(str(i) + ',' + str(fitness) + "\n")
+    textfile.close()
+    return
+
+
+def compare_last_line(value):
+    with open('a_file.txt') as f:
+        for line in f:
+            pass
+        last_line = line
+    y = float(last_line.split(',')[1])
+    return value < y
+
+
 class my_ff(base_ff):
     def __init__(self):
         # Initialise base fitness function class.
         super().__init__()
         self.sample = 0
-        self.exceptions_count = 0
+        self.exceptions_count_ind = 0
+        self.exceptions_count_rmse = 0
 
     def evaluate(self, ind, **kwargs):
         p = ind.phenotype
@@ -45,6 +65,7 @@ class my_ff(base_ff):
         ground_truth = []
         guesses = []
         times = []
+        min = 100000
         for x in range(file.shape[0]):
             tuple = file.loc[x].tolist()
             function = variables_substitution(p, tuple)
@@ -52,16 +73,26 @@ class my_ff(base_ff):
                 t0 = time.time()
                 guesses.append(eval(function))
                 t1 = time.time()
-                ground_truth.append(tuple[54])
+                ground_truth.append(tuple[-1])
                 times.append(t1 - t0)
                 if x % 10000 == 0 and x != 0:
                     print("\nSample {} - Iteration {}: Ok".format(self.sample, x))
             except:
-                self.exceptions_count += 1
-                print("\nException n° {}".format(self.exceptions_count))
+                self.exceptions_count_ind += 1
+                print("\nError with the individuals n° {}".format(self.exceptions_count_ind))
+                print(p.ind)
                 return self.default_fitness
-        function_fitness = mean_squared_error(ground_truth, guesses, squared=False)
-        return function_fitness
+        try:
+            function_fitness = mean_squared_error(ground_truth, guesses, squared=False)
+            if function_fitness < min and compare_last_line(function_fitness):
+                min = function_fitness
+                addFitness(min, 0)
+            print(function_fitness)
+            return function_fitness
+        except:
+            self.exceptions_count_rmse += 1
+            print("\nError with the rmse n° {}".format(self.exceptions_count_rmse))
+            return self.default_fitness
 
 
 def open_train_file(directory, extension):
