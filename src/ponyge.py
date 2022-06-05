@@ -34,8 +34,6 @@ def mane():
 
     print(individuals.__class__)
 
-    print(individuals)
-
 
 if __name__ == "__main__":
     mane()

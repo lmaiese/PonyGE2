@@ -8,14 +8,14 @@ machine_name = "MY_PC"
 """Algorithm parameters"""
 params = {
 # Set optional experiment name
-    'EXPERIMENT_NAME': "3-06/EXP1",
+    'EXPERIMENT_NAME': "5-06/EXP2",
     # Set default step and search loop functions
     'SEARCH_LOOP': 'search_loop',
     'STEP': 'step',
 
     # Evolutionary Parameters
-    'POPULATION_SIZE': 200,
-    'GENERATIONS': 250,
+    'POPULATION_SIZE': 500,
+    'GENERATIONS': 1000,
     'HILL_CLIMBING_HISTORY': 1000,
     'SCHC_COUNT_METHOD': "count_all",
 
@@ -53,7 +53,7 @@ params = {
     'MAX_TREE_DEPTH': 90,  # SET TO 90 DUE TO PYTHON EVAL() STACK LIMIT.
     # INCREASE AT YOUR OWN RISK.
     'MAX_TREE_NODES': None,
-    'CODON_SIZE': 300,
+    'CODON_SIZE': 500,
     'MAX_GENOME_LENGTH': None,
     'MAX_WRAPS': 0,
 
@@ -69,11 +69,11 @@ params = {
 
     # SELECTION
     # Set selection operator.
-    'SELECTION': "operators.selection.tournament",
+    'SELECTION': "operators.selection.truncation",
     # For tournament selection
-    'TOURNAMENT_SIZE': 25,
+    'TOURNAMENT_SIZE': None,
     # For truncation selection
-    'SELECTION_PROPORTION': 0.5,
+    'SELECTION_PROPORTION': 0.2,
     # Allow for selection of invalid individuals during selection process.
     'INVALID_SELECTION': False,
 
@@ -86,7 +86,7 @@ params = {
     # Set crossover operator.
     'CROSSOVER': "operators.crossover.variable_twopoint",
     # Set crossover probability.
-    'CROSSOVER_PROBABILITY': 0.75,
+    'CROSSOVER_PROBABILITY': 0.85,
     # Prevents crossover from generating invalids.
     'NO_CROSSOVER_INVALIDS': False,
 
@@ -95,17 +95,18 @@ params = {
     'MUTATION': "operators.mutation.subtree",
     # Set mutation probability (None defaults to 1 over the length of
     # the genome for each codon)
-    'MUTATION_PROBABILITY': None,
+    'MUTATION_PROBABILITY': None
+    ,
     # Set number of mutation events
-    'MUTATION_EVENTS': 1,
+    'MUTATION_EVENTS': 2,
     # Prevents mutation from generating invalids.
     'NO_MUTATION_INVALIDS': False,
 
     # REPLACEMENT
     # Set replacement operator.
-    'REPLACEMENT': "operators.replacement.generational",
+    'REPLACEMENT': "operators.replacement.steady_state",
     # Set elite size.
-    'ELITE_SIZE': None,
+    'ELITE_SIZE': 0.2,
 
     # DEBUGGING
     # Use this to turn on debugging mode. This mode doesn't write any files
@@ -129,14 +130,14 @@ params = {
 
     # MULTIPROCESSING
     # Multi-core parallel processing of phenotype evaluations.
-    'MULTICORE': False,
+    'MULTICORE': True,
     # Set the number of cpus to be used for multiprocessing
     'CORES': cpu_count(),
 
     # STATE SAVING/LOADING
     # Save the state of the evolutionary run every generation. You can
     # specify how often you want to save the state with SAVE_STATE_STEP.
-    'SAVE_STATE': True,
+    'SAVE_STATE': False,
     # Specify how often the state of the current evolutionary run is
     # saved (i.e. every n-th generation). Requires int value.
     'SAVE_STATE_STEP': 10,

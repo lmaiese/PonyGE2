@@ -9,6 +9,9 @@ result_file1 = "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\1-06\\EXP
 result_file2 = "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\3-06\\EXP1\\" \
                "LAPTOP-QPRKET60_22_6_3_173553_773404_38744_773404\\29.txt"
 
+result = "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\3-06\\EXP1\\" \
+         "DESKTOP-0N73EPT_22_6_3_225324_88347_19736_88347\\250.txt"
+
 test_file = "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\datasets\\Glucose\\540\\540-ws-testing.csv"
 terminator = "Phenotype:" + "\n"
 
@@ -65,6 +68,6 @@ def test_function(test, result):
 
 
 if __name__ == '__main__':
-    ge, be, ne, guesses, desired = test_function(test_file, result_file2)
-    filename = result_file2.split("\\")[-1]
+    ge, be, ne, guesses, desired = test_function(test_file, result)
+    filename = result.split("\\")[-1]
     clarke_error_grid(desired, guesses, filename)
