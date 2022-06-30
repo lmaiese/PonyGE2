@@ -1,5 +1,5 @@
 import numpy as np
-
+import pandas as pd
 from algorithm.parameters import params
 from stats.stats import stats
 from utilities.stats.trackers import cache, runtime_error_cache
@@ -127,8 +127,9 @@ def eval_or_append(ind, results, pool):
             # cache.
 
             if (isinstance(ind.fitness, list) and not
-            any([np.isnan(i) for i in ind.fitness])) or \
+            any([pd.isna(i) for i in ind.fitness])) or \
                     (not isinstance(ind.fitness, list) and not
-                    np.isnan(ind.fitness)):
+                    pd.isna(ind.fitness)):
                 # All fitnesses are valid.
                 cache[ind.phenotype] = ind.fitness
+

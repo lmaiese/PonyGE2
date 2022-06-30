@@ -1,0 +1,18 @@
+<expr> ::= (<gl> + <ch> - <ins> ) + <const> - <const>
+
+<gl> ::= <preop> (<gl> ) | <vargl> | <gl> <op> <gl> | (-1) * (<gl> )
+<vargl> ::= X1 | X4 | X7 | X10 | X13 | X16 | X19 | X22 | X25 | X28 | X31 | X34
+
+<ch> ::= <preop> (<ch> ) | <varch> | <ch> <op> <ch>
+<varch> ::= X2 | X5 | X8 | X11 | X14 | X17 | X20 | X23 | X26 | X29 | X32 | X35
+
+<ins> ::= <preop> (<ins> ) | <varins> | <ins> <op> <ins>
+<varins> ::= X3 | X6 | X9 | X12 | X15 | X18 | X21 | X24 | X27 | X30 | X33 | X36
+
+<op> ::= +|-|*|/
+<preop> ::= math.sin | math.cos
+<const> ::= <base> * math.pow(10, <sign><exponent> )
+
+<base> ::= 1|2|3|4|5|6|7|8|9
+<exponent> ::= 1|2|3|4|5|6|7|8|9
+<sign> ::= +|-

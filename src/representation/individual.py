@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 from algorithm.mapper import mapper
 from algorithm.parameters import params
@@ -49,9 +50,9 @@ class Individual(object):
         greater than the comparison individual.
         """
 
-        if np.isnan(self.fitness):
+        if pd.isna(self.fitness):
             return True
-        elif np.isnan(other.fitness):
+        elif pd.isna(other.fitness):
             return False
         else:
             return self.fitness < other.fitness if params[
@@ -71,9 +72,9 @@ class Individual(object):
         greater than or equal to the comparison individual.
         """
 
-        if np.isnan(self.fitness):
+        if pd.isna(self.fitness):
             return True
-        elif np.isnan(other.fitness):
+        elif pd.isna(other.fitness):
             return False
         else:
             return self.fitness <= other.fitness if params[

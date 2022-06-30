@@ -180,6 +180,33 @@ def draw_net(config, genome, view=False, filename=None, node_names=None, show_di
     return dot
 
 
+def no_plot_clarke(ref_values, pred_values):
+    # Checking to see if the lengths of the reference and prediction arrays are the same
+    assert (len(ref_values) == len(pred_values)), "Unequal number of values (reference : {}) (prediction : {}).".format(
+        len(ref_values), len(pred_values))
+
+    # Statistics from the data
+    zone = [0] * 5
+    for i in range(len(ref_values)):
+        if (ref_values[i] <= 70 and pred_values[i] <= 70) or (
+                pred_values[i] <= 1.2 * ref_values[i] and pred_values[i] >= 0.8 * ref_values[i]):
+            zone[0] += 1  # Zone A
+
+        elif (ref_values[i] >= 180 and pred_values[i] <= 70) or (ref_values[i] <= 70 and pred_values[i] >= 180):
+            zone[4] += 1  # Zone E
+
+        elif ((ref_values[i] >= 70 and ref_values[i] <= 290) and pred_values[i] >= ref_values[i] + 110) or (
+                (ref_values[i] >= 130 and ref_values[i] <= 180) and (pred_values[i] <= (7 / 5) * ref_values[i] - 182)):
+            zone[2] += 1  # Zone C
+        elif (ref_values[i] >= 240 and (pred_values[i] >= 70 and pred_values[i] <= 180)) or (
+                ref_values[i] <= 175 / 3 and pred_values[i] <= 180 and pred_values[i] >= 70) or (
+                (ref_values[i] >= 175 / 3 and ref_values[i] <= 70) and pred_values[i] >= (6 / 5) * ref_values[i]):
+            zone[3] += 1  # Zone D
+        else:
+            zone[1] += 1  # Zone B
+    return zone
+
+
 def clarke_error_grid(ref_values, pred_values, title_string):
     # Checking to see if the lengths of the reference and prediction arrays are the same
     assert (len(ref_values) == len(pred_values)), "Unequal number of values (reference : {}) (prediction : {}).".format(
@@ -237,25 +264,8 @@ def clarke_error_grid(ref_values, pred_values, title_string):
     plt.text(30, 370, "E", fontsize=15)
     plt.text(370, 15, "E", fontsize=15)
 
-    # Statistics from the data
-    zone = [0] * 5
-    for i in range(len(ref_values)):
-        if (ref_values[i] <= 70 and pred_values[i] <= 70) or (
-                pred_values[i] <= 1.2 * ref_values[i] and pred_values[i] >= 0.8 * ref_values[i]):
-            zone[0] += 1  # Zone A
+    zone = no_plot_clarke(ref_values, pred_values)
 
-        elif (ref_values[i] >= 180 and pred_values[i] <= 70) or (ref_values[i] <= 70 and pred_values[i] >= 180):
-            zone[4] += 1  # Zone E
-
-        elif ((ref_values[i] >= 70 and ref_values[i] <= 290) and pred_values[i] >= ref_values[i] + 110) or (
-                (ref_values[i] >= 130 and ref_values[i] <= 180) and (pred_values[i] <= (7 / 5) * ref_values[i] - 182)):
-            zone[2] += 1  # Zone C
-        elif (ref_values[i] >= 240 and (pred_values[i] >= 70 and pred_values[i] <= 180)) or (
-                ref_values[i] <= 175 / 3 and pred_values[i] <= 180 and pred_values[i] >= 70) or (
-                (ref_values[i] >= 175 / 3 and ref_values[i] <= 70) and pred_values[i] >= (6 / 5) * ref_values[i]):
-            zone[3] += 1  # Zone D
-        else:
-            zone[1] += 1  # Zone B
     plt.show()
     return plt, zone
 

@@ -7,33 +7,32 @@ machine_name = "MY_PC"
 
 """Algorithm parameters"""
 params = {
-# Set optional experiment name
-    'EXPERIMENT_NAME': "5-06/EXP2",
+    # Set optional experiment name
+    'EXPERIMENT_NAME': "final_run//",
     # Set default step and search loop functions
     'SEARCH_LOOP': 'search_loop',
     'STEP': 'step',
 
     # Evolutionary Parameters
-    'POPULATION_SIZE': 500,
-    'GENERATIONS': 1000,
+    'POPULATION_SIZE': 200,
+    'GENERATIONS': 250,
     'HILL_CLIMBING_HISTORY': 1000,
     'SCHC_COUNT_METHOD': "count_all",
-
 
     # Set default number of runs to be done.
     # ONLY USED WITH EXPERIMENT MANAGER.
     'RUNS': 1,
 
-    # Class of problem
-    'FITNESS_FUNCTION': "my_ff",
+    # Class of problemi
+    'FITNESS_FUNCTION': "my_ffs.error_metric.w_eval_zone_mae",
 
     # Select problem dataset
     'DATASET_TRAIN': "Glucose/540/540-ws-training.csv",
-    'DATASET_TEST': "Glucose/540/540-ws-testing.csv",
+    'DATASET_TEST': "Glucose/596/596-ws-testing.csv",
     'DATASET_DELIMITER': None,
 
     # Set grammar file
-    'GRAMMAR_FILE': "my_grammar2.pybnf",
+    'GRAMMAR_FILE': "my_grammar3.pybnf",
 
     # Set the number of depths permutations are calculated for
     # (starting from the minimum path of the grammar).
@@ -53,7 +52,7 @@ params = {
     'MAX_TREE_DEPTH': 90,  # SET TO 90 DUE TO PYTHON EVAL() STACK LIMIT.
     # INCREASE AT YOUR OWN RISK.
     'MAX_TREE_NODES': None,
-    'CODON_SIZE': 500,
+    'CODON_SIZE': 300,
     'MAX_GENOME_LENGTH': None,
     'MAX_WRAPS': 0,
 
@@ -61,7 +60,7 @@ params = {
     # Set initialisation operator.
     'INITIALISATION': "rvd",
     # Set the maximum genome length for initialisation.
-    'INIT_GENOME_LENGTH': 200,
+    'INIT_GENOME_LENGTH': 300,
     # Set the maximum tree depth for initialisation.
     'MAX_INIT_TREE_DEPTH': 10,
     # Set the minimum tree depth for initialisation.
@@ -69,11 +68,11 @@ params = {
 
     # SELECTION
     # Set selection operator.
-    'SELECTION': "operators.selection.truncation",
+    'SELECTION': "operators.selection.tournament",
     # For tournament selection
-    'TOURNAMENT_SIZE': None,
+    'TOURNAMENT_SIZE': 21,
     # For truncation selection
-    'SELECTION_PROPORTION': 0.2,
+    'SELECTION_PROPORTION': None,
     # Allow for selection of invalid individuals during selection process.
     'INVALID_SELECTION': False,
 
@@ -86,27 +85,27 @@ params = {
     # Set crossover operator.
     'CROSSOVER': "operators.crossover.variable_twopoint",
     # Set crossover probability.
-    'CROSSOVER_PROBABILITY': 0.85,
+    'CROSSOVER_PROBABILITY': 0.85
+    ,
     # Prevents crossover from generating invalids.
     'NO_CROSSOVER_INVALIDS': False,
 
     # MUTATION
     # Set mutation operator.
-    'MUTATION': "operators.mutation.subtree",
+    'MUTATION': "operators.mutation.int_flip_per_ind",
     # Set mutation probability (None defaults to 1 over the length of
     # the genome for each codon)
-    'MUTATION_PROBABILITY': None
-    ,
+    'MUTATION_PROBABILITY': None,
     # Set number of mutation events
-    'MUTATION_EVENTS': 2,
+    'MUTATION_EVENTS': 50,
     # Prevents mutation from generating invalids.
     'NO_MUTATION_INVALIDS': False,
 
     # REPLACEMENT
     # Set replacement operator.
-    'REPLACEMENT': "operators.replacement.steady_state",
+    'REPLACEMENT': "operators.replacement.generational",
     # Set elite size.
-    'ELITE_SIZE': 0.2,
+    'ELITE_SIZE': 30,
 
     # DEBUGGING
     # Use this to turn on debugging mode. This mode doesn't write any files
@@ -130,14 +129,14 @@ params = {
 
     # MULTIPROCESSING
     # Multi-core parallel processing of phenotype evaluations.
-    'MULTICORE': True,
+    'MULTICORE': False,
     # Set the number of cpus to be used for multiprocessing
     'CORES': cpu_count(),
 
     # STATE SAVING/LOADING
     # Save the state of the evolutionary run every generation. You can
     # specify how often you want to save the state with SAVE_STATE_STEP.
-    'SAVE_STATE': False,
+    'SAVE_STATE': True,
     # Specify how often the state of the current evolutionary run is
     # saved (i.e. every n-th generation). Requires int value.
     'SAVE_STATE_STEP': 10,
@@ -304,7 +303,7 @@ def set_params(command_line_args, create_files=True):
                                         params['ELITE_SIZE']
 
         if (params['MUTATION_PROBABILITY'] is not None and
-            params['MUTATION_EVENTS'] != 1):
+                params['MUTATION_EVENTS'] != 1):
             s = "operators.mutation.int_flip_per_codon\n" \
                 "Error: mutually exclusive parameters 'MUTATION_PROBABILITY'" \
                 "and 'MUTATION_EVENTS' have been explicitly set.\n" \

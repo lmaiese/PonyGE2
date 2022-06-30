@@ -1,22 +1,18 @@
+import numpy as np
 from fitness.base_ff_classes.base_ff import base_ff
-import time
-import shutil
 import os
-import random
 import pandas as pd
-import pickle
 import math
 from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error
 
-generation_range = 9
 individuals_number = 0
-graphFit = []
 data_dir = "datasets/Glucose"
 training_ext = "ws-training"
 testing_ext = "ws-testing"
 train_file = "datasets\\Glucose\\540\\540-ws-training.csv"
 train_absolute = "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\datasets\\Glucose\\540\\540-ws-training.csv"
-train_absolute_2nd = "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\datasets\\Glucose\\540\\540-ws-training.csv"
+train_absolute_2nd = "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\datasets\\Glucose\\552\\552-ws-training.csv"
 
 
 def variables_substitution(p, tuple):
@@ -49,50 +45,35 @@ def compare_last_line(value):
     return value < y
 
 
-class my_ff(base_ff):
+class mae(base_ff):
     def __init__(self):
         # Initialise base fitness function class.
         super().__init__()
         self.sample = 0
         self.exceptions_count_ind = 0
         self.exceptions_count_rmse = 0
+        self.default_fitness = np.NaN
 
     def evaluate(self, ind, **kwargs):
         p = ind.phenotype
         self.sample += + 1
-        # print("\n" + p)
-        fitness = 0
         file = pd.read_csv(train_absolute_2nd, skiprows=1, header=None)
         ground_truth = []
         guesses = []
-        times = []
-        min = 100000
         for x in range(file.shape[0]):
             tuple = file.loc[x].tolist()
             function = variables_substitution(p, tuple)
+            if self.sample % 10 == 0 and x == 1000:
+                print("SONO VIVO, proseguo")
             try:
-                t0 = time.time()
                 guesses.append(eval(function))
-                t1 = time.time()
                 ground_truth.append(tuple[-1])
-                times.append(t1 - t0)
-                if x % 10000 == 0 and x != 0:
-                    print("\nSample {} - Iteration {}: Ok".format(self.sample, x))
             except:
-                self.exceptions_count_ind += 1
-                print("\nError with the individuals n° {}".format(self.exceptions_count_ind))
                 return self.default_fitness
         try:
-            function_fitness = mean_squared_error(ground_truth, guesses, squared=False)
-            if function_fitness < min and compare_last_line(function_fitness):
-                min = function_fitness
-                addFitness(min, 0)
-            print(function_fitness)
-            return function_fitness
+            return mean_absolute_error(ground_truth, guesses)
         except:
-            self.exceptions_count_rmse += 1
-            print("\nError with the rmse n° {}".format(self.exceptions_count_rmse))
-            return self.default_fitness
+            return self.default_fitnees
 
 
 def open_train_file(directory, extension):
@@ -121,55 +102,8 @@ def get_directories(src):
     return directories
 
 
-def get_normalized_lists(file):
-    glucose = []
-    insuline = []
-    carbos = []
-    for x in range(file.shape[0]):
-        line = file.loc[x].tolist()
-        variables = int(len(line) / 3)
-        # print(line, line.__class__)
-        g = []
-        i = []
-        c = []
-
-        for k in range(variables):
-            g.append(line[k * 3])
-            i.append(line[k * 3 + 1])
-            c.append(line[k * 3 + 2])
-
-        glucose.append(g)
-        insuline.append(i)
-        carbos.append(c)
-    return glucose, insuline, carbos
-
-
 def mane():
-    print("Tests for fitness function module")
-
-    # copied_dir = copy_dir(data_dir)
-    subdirs = get_directories(data_dir)
-    subdirs.pop(0)
-    print(subdirs)
-    trials = len(subdirs)
-
-    glucose = []
-    insuline = []
-    carbos = []
-
-    for dir in subdirs:
-        file = open_train_file(dir, extension=training_ext)
-        glucose, insuline, carbos = get_normalized_lists(file)
-
-        # qua si deve:
-        # leggere il csv
-        # prendere una riga per volta
-        # trasformarla in qualche modo
-        # passarla alla funzione eval
-        # vedere se si trova il guess
-        # etcc...
-
-    # delete_dir(copied_dir)
+    pass
 
 
 if __name__ == '__main__':
@@ -179,7 +113,7 @@ if __name__ == '__main__':
 
     tuple = []
     for i in range(0, 57):
-        n = random.randint(1,2)
+        n = random.randint(1, 2)
         tuple.append(n)
     gg = variables_substitution(string, tuple)
 

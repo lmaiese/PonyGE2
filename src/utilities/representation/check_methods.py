@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from algorithm.parameters import params
 from representation import individual
 
@@ -67,8 +68,8 @@ def check_genome_mapping(ind):
             if a_0 == a_1 and attributes_0[a_0] != attributes_1[a_1] and not \
                     (type(attributes_0[a_0]) is float and
                      type(attributes_1[a_1]) is float and
-                     np.isnan(attributes_0[a_0]) and
-                     np.isnan(attributes_1[a_1])):
+                     pd.isna(attributes_0[a_0]) and
+                     pd.isna(attributes_1[a_1])):
                 s = "utilities.representation.check_methods." \
                     "check_genome_mapping\n" \
                     "Error: Individual attributes do not match genome-" \
