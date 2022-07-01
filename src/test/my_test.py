@@ -94,77 +94,54 @@ def save_stats(stats_path, param, rmse, mae, zone, percentages):
 if __name__ == '__main__':
     test_file = "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\datasets\\Glucose\\596\\596-ws-testing.csv"
 
-    stats_path = "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\results_stats.csv"
-
     exp_results = {
-        "ff_eval_zone": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\ff_analysis\\eval_zone",
-        "ff_eval_zone_d": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\ff_analysis\\eval_zone_d",
-        "ff_percentage_penality": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\ff_analysis\\penality",
-        "ff_percentage_penality_e": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\ff_analysis\\penality_e",
-        "ff_rmse": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\ff_analysis\\rmse",
-        "ff_mae": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\ff_analysis\\mae",
-        "ff_w_penality_mae": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\ff_analysis\\w_penality_mae",
-        "ff_w_penality_rmse": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\ff_analysis\\w_penality_rmse",
-        "ff_w_penality_mae_rmse": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\ff_analysis\\"
-                                  "w_penality_mae_rmse",
-        "ff_w_eval_zone_mae": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\ff_analysis\\w_eval_zone_mae",
-        "ff_w_eval_zone_rmse": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\ff_analysis\\w_eval_zone_rmse",
-        "ff_w_eval_zone_mae_rmse": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\ff_analysis\\"
-                                   "w_eval_zone_mae_rmse",
-        "ff_mae_rmse": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\ff_analysis\\mae_rmse",
-        "ff_pen_eval_mae_rmse": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\ff_analysis\\"
-                                "w_penality_eval_zone_mae_rmse",
-        "eval_zone_mutation_25": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\genetic_operators\\"
-                                 "mutation_25\\eval_zone",
-        "eval_zone_mutation_50": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\genetic_operators\\"
-                                 "mutation_50\\eval_zone",
-        "eval_zone_mutation_100": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\genetic_operators\\"
-                                  "mutation_100\\eval_zone",
-        "eval_zone_mae_mutation_25": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\genetic_operators\\"
-                                     "mutation_25\\w_eval_zone_mae",
-        "eval_zone_mae_mutation_50": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\genetic_operators\\"
-                                     "mutation_50\\w_eval_zone_mae",
-        "eval_zone_mae_mutation_100": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\genetic_operators\\"
-                                      "mutation_100\\w_eval_zone_mae",
-        "eval_zone_mutation_50_cross90": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\genetic_operators\\"
-                                         "mutation_50_crossover_090\\eval_zone",
-        "eval_zone_mutation_50_cross95": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\genetic_operators\\"
-                                         "mutation_50_crossover_095\\eval_zone",
-        "eval_zone_mutation_50_cross99": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\genetic_operators\\"
-                                         "mutation_50_crossover_099\\eval_zone",
-        "eval_zone_mae_mutation_25_cross90": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\"
-                                             "genetic_operators\\mutation_50_crossover_090\\w_eval_zone_mae",
-        "eval_zone_mae_mutation_25_cross95": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\"
-                                             "genetic_operators\\mutation_50_crossover_095\\w_eval_zone_mae",
-        "eval_zone_mae_mutation_25_cross99": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\"
-                                             "genetic_operators\\mutation_50_crossover_099\\w_eval_zone_mae",
-        "eval_zone_mutation_25_cross85_tournament7": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\"
-                                                     "tournament\\mutation_25_crossover_085_tournament_7\\eval_zone",
-        "eval_zone_mutation_25_cross85_tournament14": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\"
+        "ff_eval_zone": "PonyGE2\\results\\ff_analysis\\eval_zone",
+        "ff_eval_zone_d": "PonyGE2\\results\\ff_analysis\\eval_zone_d",
+        "ff_percentage_penality": "C:PonyGE2\\results\\ff_analysis\\penality",
+        "ff_percentage_penality_e": "PonyGE2\\results\\ff_analysis\\penality_e",
+        "ff_rmse": "PonyGE2\\results\\ff_analysis\\rmse",
+        "ff_mae": "PonyGE2\\results\\ff_analysis\\mae",
+        "ff_w_penality_mae": "PonyGE2\\results\\ff_analysis\\w_penality_mae",
+        "ff_w_penality_rmse": "PonyGE2\\results\\ff_analysis\\w_penality_rmse",
+        "ff_w_penality_mae_rmse": "PonyGE2\\results\\ff_analysis\\w_penality_mae_rmse",
+        "ff_w_eval_zone_mae": "PonyGE2\\results\\ff_analysis\\w_eval_zone_mae",
+        "ff_w_eval_zone_rmse": "PonyGE2\\results\\ff_analysis\\w_eval_zone_rmse",
+        "ff_w_eval_zone_mae_rmse": "PonyGE2\\results\\ff_analysis\\w_eval_zone_mae_rmse",
+        "ff_mae_rmse": "PonyGE2\\results\\ff_analysis\\mae_rmse",
+        "ff_pen_eval_mae_rmse": "PonyGE2\\results\\ff_analysis\\w_penality_eval_zone_mae_rmse",
+        "eval_zone_mutation_25": "PonyGE2\\results\\genetic_operators\\mutation_25\\eval_zone",
+        "eval_zone_mutation_50": "PonyGE2\\results\\genetic_operators\\mutation_50\\eval_zone",
+        "eval_zone_mutation_100": "PonyGE2\\results\\genetic_operators\\mutation_100\\eval_zone",
+        "eval_zone_mae_mutation_25": "PonyGE2\\results\\genetic_operators\\mutation_25\\w_eval_zone_mae",
+        "eval_zone_mae_mutation_50": "PonyGE2\\results\\genetic_operators\\mutation_50\\w_eval_zone_mae",
+        "eval_zone_mae_mutation_100": "PonyGE2\\results\\genetic_operators\\mutation_100\\w_eval_zone_mae",
+        "eval_zone_mutation_50_cross90": "PonyGE2\\results\\genetic_operators\\mutation_50_crossover_090\\eval_zone",
+        "eval_zone_mutation_50_cross95": "PonyGE2\\results\\genetic_operators\\mutation_50_crossover_095\\eval_zone",
+        "eval_zone_mutation_50_cross99": "PonyGE2\\results\\genetic_operators\\mutation_50_crossover_099\\eval_zone",
+        "eval_zone_mae_mutation_25_cross90": "PonyGE2\\results\\genetic_operators\\mutation_50_crossover_090\\"
+                                             "w_eval_zone_mae",
+        "eval_zone_mae_mutation_25_cross95": "PonyGE2\\results\\genetic_operators\\mutation_50_crossover_095\\"
+                                             "w_eval_zone_mae",
+        "eval_zone_mae_mutation_25_cross99": "PonyGE2\\results\\genetic_operators\\mutation_50_crossover_099\\"
+                                             "w_eval_zone_mae",
+        "eval_zone_mutation_25_cross85_tournament7": "PonyGE2\\results\\tournament\\"
+                                                     "mutation_25_crossover_085_tournament_7\\eval_zone",
+        "eval_zone_mutation_25_cross85_tournament14": "PonyGE2\\results\\"
                                                       "tournament\\mutation_25_crossover_085_tournament_14\\eval_zone",
-        "eval_zone_mutation_25_cross85_tournament28": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\"
-                                                      "tournament\\mutation_25_crossover_085_tournament_28\\eval_zone",
-        "eval_zone_mae_mutation_50_cross85_tournament7": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\"
-                                                         "tournament\\mutation_50_crossover_085_tournament_7\\"
-                                                         "w_eval_zone_mae",
-        "eval_zone_mae_mutation_50_cross85_tournament14": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\"
-                                                          "tournament\\mutation_50_crossover_085_tournament_14\\"
-                                                          "w_eval_zone_mae",
-        "eval_zone_mae_mutation_50_cross85_tournament28": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\"
-                                                          "tournament\\mutation_50_crossover_085_tournament_28\\"
-                                                          "w_eval_zone_mae",
-        "eval_zone_mutation50_cross85_tournament7_elite20": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\"
-                                                            "elite_size\\20\\eval_zone",
-        "eval_zone_mutation50_cross85_tournament7_elite40": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\"
-                                                            "elite_size\\40\\eval_zone",
-        "eval_zone_mutation50_cross85_tournament7_elite50": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\"
-                                                            "elite_size\\50\\eval_zone",
-        "eval_zone_mae_mutation50_cross85_tournament7_elite20": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\"
-                                                                "results\\elite_size\\20\\w_eval_zone_mae",
-        "eval_zone_mae_mutation50_cross85_tournament7_elite40": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\"
-                                                                "results\\elite_size\\40\\w_eval_zone_mae",
-        "eval_zone_mae_mutation50_cross85_tournament7_elite50": "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\"
-                                                                "results\\elite_size\\50\\w_eval_zone_mae",
+        "eval_zone_mutation_25_cross85_tournament28": "PonyGE2\\results\\tournament\\"
+                                                      "mutation_25_crossover_085_tournament_28\\eval_zone",
+        "eval_zone_mae_mutation_50_cross85_tournament7": "PonyGE2\\results\\tournament\\"
+                                                         "mutation_50_crossover_085_tournament_7\\w_eval_zone_mae",
+        "eval_zone_mae_mutation_50_cross85_tournament14": "PonyGE2\\results\\tournament\\"
+                                                          "mutation_50_crossover_085_tournament_14\\w_eval_zone_mae",
+        "eval_zone_mae_mutation_50_cross85_tournament28": "PonyGE2\\results\\tournament\\"
+                                                          "mutation_50_crossover_085_tournament_28\\w_eval_zone_mae",
+        "eval_zone_mutation50_cross85_tournament7_elite20": "PonyGE2\\results\\elite_size\\20\\eval_zone",
+        "eval_zone_mutation50_cross85_tournament7_elite40": "PonyGE2\\results\\elite_size\\40\\eval_zone",
+        "eval_zone_mutation50_cross85_tournament7_elite50": "PonyGE2\\results\\elite_size\\50\\eval_zone",
+        "eval_zone_mae_mutation50_cross85_tournament7_elite20": "PonyGE2\\results\\elite_size\\20\\w_eval_zone_mae",
+        "eval_zone_mae_mutation50_cross85_tournament7_elite40": "PonyGE2\\results\\elite_size\\40\\w_eval_zone_mae",
+        "eval_zone_mae_mutation50_cross85_tournament7_elite50": "PonyGE2\\results\\elite_size\\50\\w_eval_zone_mae",
     }
 
     see_clarke = {
@@ -186,7 +163,7 @@ if __name__ == '__main__':
         "eval_zone_mutation_50": False,
         "eval_zone_mutation_100": False,
         "eval_zone_mae_mutation_25": False,
-        "eval_zone_mae_mutation_50": False,
+        "eval_zone_mae_mutation_50": True,
         "eval_zone_mae_mutation_100": False,
         "eval_zone_mutation_50_cross90": False,
         "eval_zone_mutation_50_cross95": False,
