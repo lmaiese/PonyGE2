@@ -39,8 +39,6 @@ def test_function(test, result):
     tf = get_function(result).split("\n")[0]
     df = get_dataframe(test)
     number_of_elements = df.shape[0]
-    good_extimations = 0
-    bad_extimations = 0
     guesses = []
     desired = []
     for x in range(number_of_elements):
@@ -51,13 +49,9 @@ def test_function(test, result):
             z = eval(func)
             desired.append(y * 18)
             guesses.append(z * 18)
-            if y == z:
-                good_extimations += 1
-            else:
-                bad_extimations += 1
         except:
             pass
-    return good_extimations, bad_extimations, number_of_elements, guesses, desired, tf
+    return number_of_elements, guesses, desired, tf
 
 
 def calculate_percentages(zone):
@@ -257,7 +251,7 @@ if __name__ == '__main__':
             print("Experiment: {}".format(result))
             try:
                 filepath = open_last_gen(exp_results[result])
-                ge, be, ne, guesses, desired, function = test_function(test_file, filepath)
+                ne, guesses, desired, function = test_function(test_file, filepath)
                 filename = exp_results[result].split("\\")[-1]
                 rmse = mean_squared_error(desired, guesses, squared=False)
                 mae = mean_absolute_error(desired, guesses)
