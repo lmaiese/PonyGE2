@@ -82,3 +82,6 @@ if __name__ == '__main__':
         filepath = open_last_gen(best_run)
         ne, guess, desired, function = test_function(test_file, filepath)
         plot_results(desired, guess)
+
+    except:
+        pass
