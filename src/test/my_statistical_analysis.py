@@ -52,7 +52,7 @@ def calculate_mean_and_variance(rmses, maes, zones):
 
 if __name__ == '__main__':
     folder = "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\final_run"
-    best_run = "best_run"
+    best_run = "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\genetic_operators\\mutation_50\\w_eval_zone_mae"
     final_elements = list_elements_from_folder(folder)
     rmses = []
     maes = []
