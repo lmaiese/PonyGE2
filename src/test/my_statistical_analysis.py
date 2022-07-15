@@ -9,6 +9,7 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error
 from src.test.my_test import test_function, open_last_gen, calculate_percentages
 from src.test.visualize import no_plot_clarke, clarke_error_grid
 
+
 def roll_vector(array, num):
     new = np.roll(array, num)
     return new
@@ -18,8 +19,9 @@ def list_elements_from_folder(path):
     list = []
     dir = os.listdir(path)
     for elem in dir:
-        list.append(open_last_gen(path+"\\"+elem))
+        list.append(open_last_gen(path + "\\" + elem))
     return list
+
 
 def classic_plot():
     # define data
@@ -46,7 +48,8 @@ def classic_plot():
     # display plot
     plt.show()
 
-def plot_results(guess, ground):
+
+def plot_results(guess, ground, name):
     if len(guess) != len(ground):
         print("DIFFERENT LENGTH, break")
         return None
@@ -62,7 +65,7 @@ def plot_results(guess, ground):
     plt.plot(df2.time, df2.glucose, color='green', label='real', linewidth=1)
 
     # add title and axis labels
-    plt.title('Predicted Glucose vs Real Glucose')
+    plt.title(name + ' Predicted Glucose vs Real Glucose')
     plt.xlabel('Time')
     plt.ylabel('Glucose (md/dL)')
 
@@ -79,7 +82,6 @@ def calculate_mean_and_variance(rmses, maes, zones):
     Cs = []
     Ds = []
     Es = []
-
 
     for zone in zones:
         percentage = calculate_percentages(zone)
@@ -100,7 +102,7 @@ def calculate_mean_and_variance(rmses, maes, zones):
     print("MEANS")
 
     print("RMSE {}\nMAE {}\nZONES {} {} {} {} {}".format(round(rmse, 2), round(mae, 2), round(A, 2), round(B, 2),
-                                                          round(C, 2), round(D, 2), round(E, 2)))
+                                                         round(C, 2), round(D, 2), round(E, 2)))
 
     rmse = np.var(np.array(rmses))
     mae = np.var(np.array(maes))
@@ -113,85 +115,64 @@ def calculate_mean_and_variance(rmses, maes, zones):
     print("VARIANCES")
 
     print("RMSE {}\nMAE {}\nZONES {} {} {} {} {}".format(round(rmse, 2), round(mae, 2), round(A, 2), round(B, 2),
-                                                          round(C, 2), round(D, 2), round(E, 2)))
+                                                         round(C, 2), round(D, 2), round(E, 2)))
+
+    print("SORTED PERCENTAGES")
+
+    sA = np.sort(As)
+    sB = np.sort(Bs)
+    sC = np.sort(Cs)
+    sD = np.sort(Ds)
+    sE = np.sort(Es)
+
+    print("AS")
+    print(sA)
+    print("BS")
+    print(sB)
+    print("CS")
+    print(sC)
+    print("DS")
+    print(sD)
+    print("ES")
+    print(sE)
 
     return
 
+
+def list_all_test_files(dataset_folder):
+    list = []
+    dir = os.listdir(dataset_folder)
+    for elem in dir:
+        list.append(dataset_folder + "\\" + elem + "\\" + elem + "-ws-testing.csv")
+    return list
+
+
 if __name__ == '__main__':
-    test_file = "PonyGE2\\datasets\\Glucose\\596\\596-ws-testing.csv"
-    folder = "PonyGE2\\results\\final_run"
-    best_run = "PonyGE2\\results\\genetic_operators\\mutation_50\\w_eval_zone_mae"
+    dataset_folder = "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\datasets\\Glucose"
+    folder = "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\final_run"
+    best_run = "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\results\\genetic_operators\\mutation_50\\w_eval_zone_mae"
+    test_file = "C:\\Users\\luigi\\Documents\\GitHub\\PonyGE2\\datasets\\Glucose\\596\\596-ws-testing.csv"
+    worst_run = ""
+
+    best_run_file = ""
+    worst_run_file = ""
+
+    test_files = list_all_test_files(dataset_folder)
     final_elements = list_elements_from_folder(folder)
-    rmses = []
-    maes = []
-    guesses = []
-    desireds = []
-    nes = []
-    functions = []
-    zones = []
-    percentages = []
+    final_elements.append(open_last_gen(best_run))
 
-    for elem in final_elements:
-        try:
-            roll_value = 13
-            ne, guess, desired, function = test_function(test_file, elem)
-            desired = roll_vector(desired,roll_value)
-
-            zone = no_plot_clarke(desired, guess)
-            zones.append(zone)
-
-            percentage = calculate_percentages(zone)
-            percentages.append(percentage)
-
-            rmse = (mean_squared_error(desired, guess, squared=False))
-            rmses.append(rmse)
-
-            mae = mean_absolute_error(desired, guess)
-            maes.append(mae)
-
-            nes.append(ne)
-            guesses.append(guess)
-            desireds.append(desired)
-            functions.append(function)
-            try:
-                print(
-                    "Function: {} \nLast gen: {} RMSE: {} ({}) MAE: {} ({}) SUM: {} ({})\nZONES: {} PERCENTAGES: {}"
-                    " A+B%: {} (A% {})% D+E%: {}%\n\n".format(
-                        function, elem.split("\\")[-1].split(".")[0],
-                        str(round(rmse, 2)), str(round((rmse / 18), 2)),
-                        str(round(mae, 2)), str(round((mae / 18), 2)),
-                        str(round((rmse + mae), 2)), str(round((rmse + mae) / 18, 2)),
-                        str(zone),
-                        str(percentage),
-                        str(round(percentage[0] + percentage[1], 2)),
-                        str(round(percentage[0], 2)),
-                        str(round(percentage[3] + percentage[4], 2))
-                    ))
-            except:
-                print("no print")
-        except:
-            print("Error while evaluating the current function. Sorry!\n\n")
+    best_sum = 100
+    worst_sum = 0
 
     try:
-        calculate_mean_and_variance(rmses, maes, zones)
+        print("\nSTEP 3 RUN IS: {}\nOVER: {}".format(best_run, test_file))
+        ne, guess, desired, function = test_function(test_file, open_last_gen(best_run))
+        plot_results(guess, desired, "STEP 3 RUN")
     except:
-        print("no mean and average")
+        print("no plot step 3 ")
 
     try:
-        filepath = open_last_gen(best_run)
-        ne, guess, desired, function = test_function(test_file, filepath)
-        plot_results(desired, guess)
-    except:
-        print("no plot1")
-
-
-    try:
-        roll_value = 13
-        filepath = open_last_gen(best_run)
-        ne, guess, desired, function = test_function(test_file, filepath)
-        desired = roll_vector(desired, roll_value)
-        plot_results(desired, guess)
-        plt, zone = clarke_error_grid(desired, guess, None)
+        plt, zone = clarke_error_grid(desired, guess, "STEP 3 RUN")
         percentage = calculate_percentages(zone)
         rmse = (mean_squared_error(desired, guess, squared=False))
         mae = mean_absolute_error(desired, guess)
@@ -200,7 +181,7 @@ if __name__ == '__main__':
             print(
                 "Function: {} \nLast gen: {} RMSE: {} ({}) MAE: {} ({}) SUM: {} ({})\nZONES: {} PERCENTAGES: {}"
                 " A+B%: {} (A% {})% D+E%: {}%\n\n".format(
-                    function, elem.split("\\")[-1].split(".")[0],
+                    function, best_run.split("\\")[-1].split(".")[0],
                     str(round(rmse, 2)), str(round((rmse / 18), 2)),
                     str(round(mae, 2)), str(round((mae / 18), 2)),
                     str(round((rmse + mae), 2)), str(round((rmse + mae) / 18, 2)),
@@ -216,3 +197,253 @@ if __name__ == '__main__':
     except:
         print("no plot2")
 
+    print("NUMERO DI ESECUZIONI FATTE = {}".format(len(final_elements)))
+    print("NUMERO DI PAZIENTI = {}\n\n".format(len(test_files)))
+
+    rmses = []
+    maes = []
+    guesses = []
+    desireds = []
+    nes = []
+    functions = []
+    zones = []
+    percentages = []
+
+    per_patients_maes_mean = {}
+    per_patients_rmses_mean = {}
+    per_patients_maes_variance = {}
+    per_patients_rmses_variance = {}
+
+    per_patients_As_mean = {}
+    per_patients_Bs_mean = {}
+    per_patients_Cs_mean = {}
+    per_patients_Ds_mean = {}
+    per_patients_Es_mean = {}
+
+    per_patients_As_var = {}
+    per_patients_Bs_var = {}
+    per_patients_Cs_var = {}
+    per_patients_Ds_var = {}
+    per_patients_Es_var = {}
+
+    for test_file in test_files:
+        print("CURRENT TEST FILE: {}".format(test_file))
+        patients_maes = []
+        patients_rmses = []
+        patients_As = []
+        patients_Bs = []
+        patients_Cs = []
+        patients_Ds = []
+        patients_Es = []
+        for elem in final_elements:
+            try:
+                ne, guess, desired, function = test_function(test_file, elem)
+
+                rmse = (mean_squared_error(desired, guess, squared=False))
+                rmses.append(rmse)
+                patients_rmses.append(rmse)
+
+                mae = mean_absolute_error(desired, guess)
+                maes.append(mae)
+                patients_maes.append(mae)
+
+                zone = no_plot_clarke(desired, guess)
+                zones.append(zone)
+
+                percentage = calculate_percentages(zone)
+                percentages.append(percentage)
+                patients_As.append(percentage[0])
+                patients_Bs.append(percentage[1])
+                patients_Cs.append(percentage[2])
+                patients_Ds.append(percentage[3])
+                patients_Es.append(percentage[4])
+
+                if rmse + mae < best_sum:
+                    best_sum = rmse + mae
+                    best_run = elem
+                    best_run_file = test_file
+
+                if rmse + mae > worst_sum:
+                    worst_sum = rmse + mae
+                    worst_run = elem
+                    worst_run_file = test_file
+
+                nes.append(ne)
+                guesses.append(guess)
+                desireds.append(desired)
+                functions.append(function)
+
+                pr = True
+                try:
+                    if pr:
+                        print(
+                            "Function: {} \nLast gen: {} RMSE: {} ({}) MAE: {} ({}) SUM: {} ({})\nZONES: {} "
+                            "PERCENTAGES: {} A+B%: {} (A% {})% D+E%: {}%\n\n".format(
+                                function, elem.split("\\")[-1].split(".")[0],
+                                str(round(rmse, 2)), str(round((rmse / 18), 2)),
+                                str(round(mae, 2)), str(round((mae / 18), 2)),
+                                str(round((rmse + mae), 2)), str(round((rmse + mae) / 18, 2)),
+                                str(zone),
+                                str(percentage),
+                                str(round(percentage[0] + percentage[1], 2)),
+                                str(round(percentage[0], 2)),
+                                str(round(percentage[3] + percentage[4], 2))
+                            ))
+                except:
+                    print("no print")
+
+            except:
+                print("Error while evaluating the current function. Sorry!")
+                print("FILE: {}\nELEMENT: {}\n\n".format(test_file, elem))
+        try:
+            per_patients_maes_mean[test_file] = np.mean(np.array(patients_maes))
+            per_patients_rmses_mean[test_file] = np.mean(np.array(patients_rmses))
+            per_patients_maes_variance[test_file] = np.var(np.array(patients_maes))
+            per_patients_rmses_variance[test_file] = np.var(np.array(patients_rmses))
+
+            per_patients_As_mean[test_file] = np.mean(np.array(patients_As))
+            per_patients_Bs_mean[test_file] = np.mean(np.array(patients_Bs))
+            per_patients_Cs_mean[test_file] = np.mean(np.array(patients_Cs))
+            per_patients_Ds_mean[test_file] = np.mean(np.array(patients_Ds))
+            per_patients_Es_mean[test_file] = np.mean(np.array(patients_Es))
+
+            per_patients_As_var[test_file] = np.var(np.array(patients_As))
+            per_patients_Bs_var[test_file] = np.var(np.array(patients_Bs))
+            per_patients_Cs_var[test_file] = np.var(np.array(patients_Cs))
+            per_patients_Ds_var[test_file] = np.var(np.array(patients_Ds))
+            per_patients_Es_var[test_file] = np.var(np.array(patients_Es))
+        except:
+            print("error per patients mean")
+
+    try:
+        calculate_mean_and_variance(rmses, maes, zones)
+    except:
+        print("no mean and average")
+
+    try:
+        print("\nSORTED RMSES AND MAE")
+        rmses = np.sort(rmses)
+        maes = np.sort(maes)
+
+        print(rmses)
+        print(maes)
+    except:
+        print("no sort")
+
+    try:
+        print("\nSORTED PERCENTAGES")
+        p = []
+        for zone in zones:
+            p.append(calculate_percentages(zone))
+
+
+        rmses = np.sort(rmses)
+        maes = np.sort(maes)
+
+        print(rmses)
+        print(maes)
+    except:
+        print("no sort")
+
+    try:
+        print("\nBEST RUN IS: {}\nOVER: {}".format(best_run, best_run_file))
+        ne, guess, desired, function = test_function(best_run_file, best_run)
+        plot_results(guess, desired, "BEST RUN")
+    except:
+        print("no plot1")
+
+    try:
+        plt, zone = clarke_error_grid(desired, guess, "BEST RUN")
+        percentage = calculate_percentages(zone)
+        rmse = (mean_squared_error(desired, guess, squared=False))
+        mae = mean_absolute_error(desired, guess)
+
+        try:
+            print(
+                "Function: {} \nLast gen: {} RMSE: {} ({}) MAE: {} ({}) SUM: {} ({})\nZONES: {} PERCENTAGES: {}"
+                " A+B%: {} (A% {})% D+E%: {}%\n\n".format(
+                    function, best_run.split("\\")[-1].split(".")[0],
+                    str(round(rmse, 2)), str(round((rmse / 18), 2)),
+                    str(round(mae, 2)), str(round((mae / 18), 2)),
+                    str(round((rmse + mae), 2)), str(round((rmse + mae) / 18, 2)),
+                    str(zone),
+                    str(percentage),
+                    str(round(percentage[0] + percentage[1], 2)),
+                    str(round(percentage[0], 2)),
+                    str(round(percentage[3] + percentage[4], 2))
+                ))
+        except:
+            print("no print")
+
+    except:
+        print("no plot2")
+
+    try:
+        print("\nWORST RUN IS: {}\nOVER: {}".format(worst_run, worst_run_file))
+        ne, guess, desired, function = test_function(worst_run_file, worst_run)
+        plot_results(guess, desired, "WORST RUN")
+    except:
+        print("no plot1")
+
+    try:
+        plt, zone = clarke_error_grid(desired, guess, "WORST RUN")
+        percentage = calculate_percentages(zone)
+        rmse = (mean_squared_error(desired, guess, squared=False))
+        mae = mean_absolute_error(desired, guess)
+
+        try:
+            print(
+                "Function: {} \nLast gen: {} RMSE: {} ({}) MAE: {} ({}) SUM: {} ({})\nZONES: {} PERCENTAGES: {}"
+                " A+B%: {} (A% {})% D+E%: {}%\n\n".format(
+                    function, worst_run.split("\\")[-1].split(".")[0],
+                    str(round(rmse, 2)), str(round((rmse / 18), 2)),
+                    str(round(mae, 2)), str(round((mae / 18), 2)),
+                    str(round((rmse + mae), 2)), str(round((rmse + mae) / 18, 2)),
+                    str(zone),
+                    str(percentage),
+                    str(round(percentage[0] + percentage[1], 2)),
+                    str(round(percentage[0], 2)),
+                    str(round(percentage[3] + percentage[4], 2))
+                ))
+        except:
+            print("no print")
+
+    except:
+        print("no plot2")
+
+    try:
+        print("\nRMSE/MAE MEAN OVER DIFFERENT patients:\n")
+        for rmse in per_patients_rmses_mean:
+
+            print("patients {}: {} & {} & {}".format(rmse.split("\\")[-1].split(".")[0],
+                                                     str(round(per_patients_rmses_mean[rmse], 2)),
+                                                     str(round(per_patients_maes_mean[rmse], 2)),
+                                                     str(round(per_patients_rmses_mean[rmse] +
+                                                               per_patients_maes_mean[rmse], 2))))
+        print("\nRMSE/MAE VARIANCE OVER DIFFERENT patients:\n")
+        for rmse in per_patients_rmses_mean:
+            print("patients {}: {} & {} & {}".format(rmse.split("\\")[-1].split(".")[0],
+                                                     str(round(per_patients_rmses_variance[rmse], 2)),
+                                                     str(round(per_patients_maes_variance[rmse], 2)),
+                                                     str(round(
+                                                        per_patients_rmses_variance[rmse] + per_patients_maes_variance[
+                                                            rmse], 2))
+                                                    ))
+        print("\nZONES MEAN OVER DIFFERENT patients:\n")
+        for rmse in per_patients_rmses_mean:
+            print("patients {}: {} & {} & {} & {} & {}".format(rmse.split("\\")[-1].split(".")[0],
+                                                     str(round(per_patients_As_mean[rmse], 2)),
+                                                     str(round(per_patients_Bs_mean[rmse], 2)),
+                                                     str(round(per_patients_Cs_mean[rmse], 2)),
+                                                     str(round(per_patients_Ds_mean[rmse], 2)),
+                                                     str(round(per_patients_Es_mean[rmse], 2))))
+        print("\nZONES VAR OVER DIFFERENT patients:\n")
+        for rmse in per_patients_rmses_mean:
+            print("patients {}: {} & {} & {} & {} & {}".format(rmse.split("\\")[-1].split(".")[0],
+                                                     str(round(per_patients_As_var[rmse], 2)),
+                                                     str(round(per_patients_Bs_var[rmse], 2)),
+                                                     str(round(per_patients_Cs_var[rmse], 2)),
+                                                     str(round(per_patients_Ds_var[rmse], 2)),
+                                                     str(round(per_patients_Es_var[rmse], 2))))
+    except:
+        print("no patients rmse mae means")
